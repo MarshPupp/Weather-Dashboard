@@ -1,4 +1,5 @@
 const apiKey = '4115e0c777e4f5d36149f0410dd53abe';
+var historyEl = document.getElementById('searchHistory')
 
 function getLocalStorage() {
   if (localStorage.length > 0) {
@@ -6,8 +7,6 @@ function getLocalStorage() {
       let storedCity = localStorage.getItem(localStorage.key(i));
       var listEl = document.createElement('returnButton');
       listEl.textContent = storedCity;
-
-      var historyEl = document.getElementById('searchHistory')
 
       historyEl.append(listEl);
     }
@@ -31,17 +30,31 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     var lat = data[0].lat;
     var lon = data[0].lon;
     console.log(lon,lat);
+    fetch(
+      'https://api.openweathermap.org/data/3.0/onecall?lat= ' + lat +'&lon=' + lon + '&appid=' + apiKey
+    )
+    .then((response) => response.json())
+    .then((data) => 
+    console.log(data)
+  )
+  
   })
-
-fetch(
-  'https://api.openweathermap.org/data/3.0/onecall?lat= ' + data[0].lat  +'&lon=' + data[0].lon + '&appid=' + apiKey
-)
-.then((response) => response.json())
-.then((data) => 
-console.log(data)
-)
-
 
 
 });
 
+function updateHistory() {
+  historyEl.innerHTML = '';
+
+  for (let i = 0; i < localStorage.length; i++) {
+    let storedCity = localStorage.getItem(localStorage.key(i));
+    var listEl = document.createElement('returnButton');
+    listEl.textContent = storedCity;
+
+    historyEl.append(listEl);
+  }
+};
+
+function clearSearch() {
+
+}
