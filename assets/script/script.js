@@ -1,5 +1,7 @@
-const apiKey = '4115e0c777e4f5d36149f0410dd53abe';
-var historyEl = document.getElementById('searchHistory')
+const APIKey = '4115e0c777e4f5d36149f0410dd53abe';
+var historyEl = document.getElementById('searchHistory');
+var longitude;
+var latitude;
 
 function getLocalStorage() {
   if (localStorage.length > 0) {
@@ -18,26 +20,40 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
   console.log('button works')
 
   let cityName = document.getElementById('cityInput').value;
+
   localStorage.setItem(cityName,cityName)
   console.log(cityName)
 
-  fetch(
-    'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&appid=' + apiKey
-  )
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    var lat = data[0].lat;
-    var lon = data[0].lon;
-    console.log(lon,lat);
-    fetch(
-      'https://api.openweathermap.org/data/3.0/onecall?lat= ' + lat +'&lon=' + lon + '&appid=' + apiKey
-    )
-    .then((response) => response.json())
-    .then((data) => 
-    console.log(data)
-  )
-  
+var geoQueryURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityName + '&appid=' + APIKey + '&units=imperial';
+var weatherQuery = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + APIKey + '&units=imperial';
+
+  fetch(geoQueryURL)
+    .then(function (response) {return response.json() })
+    .then(function (data) {
+      console.log(data);
+      latitude = data[0].latitude;
+      longitude = data[0].longitude;
+      console.log(longitude,latitude);
+
+    fetch(weatherQuery)
+    .then(function (response) {response.json()})
+    .then(function (weatherData) {
+      console.log(weatherData);
+      //let city = weatherData.name;
+      //let date = new Date(weatherData.dt * 1000).toLocaleDateString();
+      //let icon = weatherData.weather[0].icon;
+      //let temperature = weatherData.main.temp;
+      //let humidity = weatherData.main.humidity;
+      //let windSpeed = weatherData.wind.speed;
+
+      document.getElementById('weatherDisplay').innerHTML = `
+        <h2>${city} (${date})</h2>
+        <img src="http://openweathermap.org/img/wn/${icon}.png" alt="Weather Icon">
+        <p>Temperature: ${temperature} °F</p>
+        <p>Humidity: ${humidity}%</p>
+        <p>Wind Speed: ${windSpeed} MPH</p>
+      `;
+    })
   })
 
 
