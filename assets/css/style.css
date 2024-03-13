@@ -1,8 +1,18 @@
-.container {
+.search-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   text-align: center;
+}
+
+.weatherDisplay {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card {
+
 }
 
 h1 {
