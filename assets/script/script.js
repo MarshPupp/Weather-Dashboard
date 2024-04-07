@@ -78,7 +78,7 @@ function getForecast(latitude, longitude, city) {
 
 function displayForecast(data) {
   console.log(data);
-  for(var i = 0; i < 6; i++) {
+  for(var i = 0; i < 5; i++) {
     var forecast = data.list[i * 8]
     var date = new Date(forecast.dt * 1000);
 

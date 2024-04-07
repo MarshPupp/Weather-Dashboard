@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <div class="search-container">
-        <h1>Weather Dashboard</h1>
-        <form id="searchForm">
-            <input type="text" id="cityInput" placeholder="Enter city name">
-            <button id="srchBtn" type="submit">Search</button>
-        </form>
+    <div class="top-container">
+        <div class="search-history">
+            <h2>Previous Searches:</h2>
+            <ul id="city-list"></ul>
+        </div>
+        <div class="search-container">
+            <h1>Weather Dashboard</h1>
+            <form id="searchForm">
+                <input type="text" id="cityInput" placeholder="Enter city name">
+                <button id="srchBtn" type="submit">Search</button>
+            </form>
+        </div>
     </div>
+    
     <div class="weatherDisplay">
         <div class="weather-card">
             <div id="city"></div>
@@ -59,20 +66,9 @@
                 <div id="wind-5"></div>
                 <div id="humidity-5"></div>
             </div>
-            <div class="weather-card" id="card-6">
-                <div id="date-6"></div>
-                <div id="icon-6"></div>
-                <div id="temp-6"></div>
-                <div id="wind-6"></div>
-                <div id="humidity-6"></div>
             </div>
         </div>
     </div>
-    <aside>
-        <div id="searchHistory">
-            <!-- Search history will be displayed here -->
-        </div>
-    </aside>
     <script src="./assets/script/script.js"></script>
 </body>
 </html>
