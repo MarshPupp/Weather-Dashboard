@@ -11,8 +11,10 @@
   justify-content: space-between;
 }
 
-.card {
-
+.weather-card {
+max-width: 400px;
+margin: 0 auto;
+text-align: center;
 }
 
 h1 {

@@ -46,5 +46,19 @@ function getWeather(latitude, longitude) {
 }
 
 function displayWeather(data) {
-  
+  var currentWeather = data.list[0];
+  var cityName = data.city.name;
+  var currentDate = new Date(currentWeather.dt * 1000);
+
+  document.getElementById('city').innerHTML = 'City: ' + cityName;
+
+  document.getElementById('date').innerHTML = 'Date: ' + currentDate.toLocaleDateString();
+
+  document.getElementById('icon').innerHTML = '<img src="https://openweathermap.org/img/wn/' + currentWeather.weather[0].icon + '.png" alt="weather icon">';
+
+  document.getElementById('current-temp').innerHTML = 'Temperature: ' + currentWeather.main.temp + '°F';
+
+  document.getElementById('current-wind').innerHTML = 'Wind: ' +  currentWeather.wind.speed + ' MPH';
+
+  document.getElementById('current-humidity').innerHTML = 'Humidity: ' + currentWeather.main.humidity + '%';
 }
