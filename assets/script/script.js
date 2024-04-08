@@ -1,5 +1,6 @@
 const APIKey = '4115e0c777e4f5d36149f0410dd53abe';
-var historyEl = document.getElementById('searchHistory');
+var historyEl = document.getElementById('city-list')
+//var cityInput = document.querySelector('#city-input');
 var longitude;
 var latitude;
 
@@ -7,14 +8,13 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
   event.preventDefault();
   console.log('button works')
 
-
   let cityName = document.getElementById('cityInput').value;
-
-
-  localStorage.setItem(cityName,cityName)
+  //var cityName = cityInput.value.trim();
   console.log(cityName)
 
   getGeoCode(cityName);
+  saveHistory(cityName);
+  displayHistory();
 });
 
 function getGeoCode(cityName) {
@@ -93,3 +93,38 @@ function displayForecast(data) {
     document.getElementById('humidity-' + (i+1)).innerHTML = 'Humidity: ' + forecast.main.humidity + '%';
   }
 }
+
+function saveHistory(cityName) {
+  var maxSaved = 5;
+  var cities = JSON.parse(localStorage.getItem('cityHistory')) || [];
+  cities = cities.filter(function (c) { 
+      return c.toLowerCase() !== cityName.toLowerCase();
+  });
+  cities.unshift(cityName);
+  if (cities.length > maxSaved) {
+      cities = cities.slice(0, maxSaved);
+  }
+  localStorage.setItem('cityHistory', JSON.stringify(cities));
+}
+
+function displayHistory() {
+  var cities = JSON.parse(localStorage.getItem('cityHistory')) || [];
+  historyEl.innerHTML = '';
+
+  cities.forEach(function (cityName) {
+      var cityLi = document.createElement('li');
+      cityLi.textContent = cityName;
+      cityLi.classList.add('list-item', 'clickable');
+    cityLi.style.cursor = 'pointer';
+      cityLi.addEventListener('click', function() {
+        document.getElementById('cityInput').value = cityName;
+        console.log(cityName);
+        getGeoCode(cityName);
+      });
+    historyEl.appendChild(cityLi);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  displayHistory()
+})
