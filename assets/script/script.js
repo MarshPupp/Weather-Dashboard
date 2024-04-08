@@ -6,11 +6,11 @@ var latitude;
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
   event.preventDefault();
-  console.log('button works')
+  //console.log('button works')
 
   let cityName = document.getElementById('cityInput').value;
   //var cityName = cityInput.value.trim();
-  console.log(cityName)
+  //console.log(cityName)
 
   getGeoCode(cityName);
   saveHistory(cityName);
@@ -23,10 +23,10 @@ function getGeoCode(cityName) {
   fetch(geoQuery)
     .then(function (response) {return response.json()})
     .then(function(data) {
-      console.log(data);
+      //console.log(data);
       latitude = data[0].lat;
       longitude = data[0].lon;
-      console.log(latitude,longitude);
+      //console.log(latitude,longitude);
 
       getWeather(latitude, longitude);
       getForecast(latitude,longitude)
@@ -39,7 +39,7 @@ function getWeather(latitude, longitude) {
   fetch(weatherQuery)
     .then(function(response) {return response.json()})
     .then(function(data) {
-      console.log(data);
+      //console.log(data);
       displayWeather(data);
     }).catch(function(error){
       console.error('Failed to fetch weather', error);
@@ -69,7 +69,7 @@ function getForecast(latitude, longitude, city) {
   fetch(weatherQuery)
   .then(function(response) {return response.json()})
     .then(function(data) {
-      console.log(data);
+      //console.log(data);
       displayForecast(data);
     }).catch(function(error) {
       console.error('Failed to fetch forecast: ',error);
@@ -77,7 +77,7 @@ function getForecast(latitude, longitude, city) {
 }
 
 function displayForecast(data) {
-  console.log(data);
+  //console.log(data);
   for(var i = 0; i < 5; i++) {
     var forecast = data.list[i * 8]
     var date = new Date(forecast.dt * 1000);
@@ -118,7 +118,7 @@ function displayHistory() {
     cityLi.style.cursor = 'pointer';
       cityLi.addEventListener('click', function() {
         document.getElementById('cityInput').value = cityName;
-        console.log(cityName);
+        //console.log(cityName);
         getGeoCode(cityName);
       });
     historyEl.appendChild(cityLi);
